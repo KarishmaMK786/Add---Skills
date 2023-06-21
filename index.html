@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    
+    <div id = "container" class="skills-container">
+        <input type="text" placeholder="add skills">
+    </div>
+
+    <script >
+        const skillsContainer = document.getElementById("container");
+        const addedSkills = [];
+        const input =  document.getElementsByTagName("input")[0];   
+        input.addEventListener("keyup", (e) => {
+            const enteredValue = input.value.trim();
+            const key = e.key;
+            if(key === "Enter" && enteredValue){
+                const b = document.createElement("b");
+                b.innerText = enteredValue;
+                b.className = "chip";
+                addedSkills.push(enteredValue);
+                appendNewElementAtFront(b);
+                input.value = "";
+            }
+            key === "Enter" && !enteredValue && (input.value="");
+        })
+           
+        function appendNewElementAtFront(){
+            skillsContainer.innerHTML = '';
+            for(let i =0; i<addedSkills.length;i++) {
+                const b = document.createElement("b");
+                b.innerText = addedSkills[i];
+                b.className = "chip";
+                b.addEventListener("click", removeElement)
+                skillsContainer.appendChild(b);
+            }
+            skillsContainer.appendChild(input);
+        }
+        function removeElement(e) {
+            const targetElement = e.target;
+            const value = targetElement.innerText;
+            let index = addedSkills.indexOf(value);
+            addedSkills.splice(index,1);
+            e.target.remove();
+            // appendNewElementAtFront();
+        }
+    </script>
+
+
+    <!-- 
+        arr = [3, 10, 23, 2]
+        stack = [2, 10, 23, 3]
+        arr = [20,3, 23, 10, 2 ]
+     -->
+</body>
+</html>
